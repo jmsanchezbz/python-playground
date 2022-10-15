@@ -27,7 +27,7 @@ class MyThread(threading.Thread):
       my_site = self.queue.get()
       url = urllib2.urlopen(my_site)
 
-      print 'hola'
+      print('hola')
       # Grab a little data to make sure it is working
       print url.read(1024)
 
