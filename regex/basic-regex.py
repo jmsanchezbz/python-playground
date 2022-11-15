@@ -59,3 +59,27 @@ print(check_zip_code(
     "Their address is: 123 Main Street, Anytown, AZ 85258-0001."))  # True
 print(check_zip_code(
     "The Parliament of Canada is at 111 Wellington St, Ottawa, ON K1A0A9."))  # False
+
+
+def compare_strings(string1, string2):
+  #Convert both strings to lowercase
+  #and remove leading and trailing blanks
+  string1 = string1.lower().strip()
+  string2 = string2.lower().strip()
+
+  #Ignore punctuation
+  punctuation = r"[.?!,;:'-]"  # watch out: - before ' does not work r"[.?!,;:-']"
+  string1 = re.sub(punctuation, r"", string1)
+  string2 = re.sub(punctuation, r"", string2)
+
+  #DEBUG CODE GOES HERE
+  print(string1, " == ", string2)
+
+  return string1 == string2
+
+
+print(compare_strings("Have a Great Day!", "Have a great day?"))  # True
+print(compare_strings("It's raining again.", "its raining, again"))  # True
+print(compare_strings("Learn to count: 1, 2, 3.",
+                      "Learn to count: one, two, three."))  # False
+print(compare_strings("They found some body.", "They found somebody."))  # False
