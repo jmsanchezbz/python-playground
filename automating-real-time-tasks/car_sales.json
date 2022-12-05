@@ -1,0 +1,22 @@
+[
+{
+    "id": 47,
+    "car": {
+        "car_make": "Lamborghini",
+        "car_model": "Murciélago",
+        "car_year": 2002
+    },
+    "price": "$13724.05",
+    "total_sales": 149
+},
+{
+    "id": 48,
+    "car": {
+        "car_make": "Ferrari",
+        "car_model": "F40",
+        "car_year": 2002
+    },
+    "price": "$15724.05",
+    "total_sales": 164
+}
+]
