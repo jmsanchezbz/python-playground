@@ -3,26 +3,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-#from selenium.webdriver.common.keys import Keys
 
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from urllib.parse import urlparse
 
-#from selenium.webdriver.chrome.options import Options
-#from bs4 import BeautifulSoup
 import sys
 import time
-#import os
 import csv
 import urllib.request
 import json
-#import requests
 import wget
 import unittest
 import sys
-#from collections import defaultdict
 
 URL_json_cim = "https://emap.conselldemallorca.cat/documents/7858057/8329905/cimplaces.json"
 URL_json_ent = "https://emap.conselldemallorca.cat/documents/7858057/8329905/ajplaces.json"
@@ -32,21 +26,21 @@ idProcediment = 90659
 def download(url, filename):
     r = wget.download(url, filename)
 
+
 def load_json(filepath):
     with open(filepath) as jsonFile:
         data = json.load(jsonFile)
     return data
+
 
 def obtain_json(url):
     with urllib.request.urlopen(url) as url1:
         data = json.load(url1)
     return data
 
-"""
-    verify_procediment
-    return [seu_codi_title_ok, seu_link_app, seu_err_msg]
-"""
+
 def verify_procediment(codi, idProcediment):
+    """ verify_procediment -> [seu_codi_title_ok, seu_link_app, seu_err_msg] """
     isOk = False
     result = []
     URL_seu = "https://seu.conselldemallorca.net/ca/fitxa?key="
@@ -60,36 +54,22 @@ def verify_procediment(codi, idProcediment):
 
     try:
         if (idProcediment == 0):
-            #print("verify_procediment: " + str(idProcediment))
             result = [True, '', '']
             return
 
-        # Check if the scheme and netloc components are not empty
-        #print("verify_procediment: " + url)
-        #result = urlparse(url)
-        #if result.scheme and result.netloc:
-        #print("check url: " + result.scheme + " " + result.netloc)
         driver.get(url)
         driver.implicitly_wait(20)
         title_css_selector = "div.titulotramitedocu#titulotramitedocu > h1"
-        """elem = WebDriverWait(driver, 20).until(
-            EC.visibility_of_element_located(
-                (By.CSS_SELECTOR, title_css_selector))
-        )"""
         elem = WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, title_css_selector)))
-        #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
-        #print(elem.text)
 
-        #print("verify_procediment text: "+elem.text)
         if (codi in elem.text):
             isOk = True
 
         link_procediment = "a.btn.btn-lg.btn-primary.botonrealizartramit"
         link_elem = driver.find_elements(By.CSS_SELECTOR, link_procediment)
         link = link_elem[0].get_attribute("href")
-        #else:
-        #    print("Invalid URL: " + url)
+
         result = [isOk, link, ""]
     except TimeoutException as ex:
         result = [isOk, link, str(ex)]
@@ -102,11 +82,8 @@ def verify_procediment(codi, idProcediment):
         return result
 
 
-"""
-    verify_convocatoriaapp
-    return [app_codi_ok, app_err_msg]
-"""
 def verify_apppage(codi, url):
+    """ verify_convocatoriaapp -> [app_codi_ok, app_err_msg] """
     isOk = False
     result = []
 
@@ -119,9 +96,6 @@ def verify_apppage(codi, url):
             result = [True, '']
             return
 
-        # Check if the scheme and netloc components are not empty
-        #result = urlparse(url)
-        #if result.scheme and result.netloc:
         driver.get(url)
         driver.implicitly_wait(20)
         title_css_selector = "h3.d-inline-flex.justify-content-between.w-100>div"
@@ -130,8 +104,6 @@ def verify_apppage(codi, url):
                 (By.CSS_SELECTOR, title_css_selector))
         )
 
-        #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
-        #print("App " + elem.text)
         if (codi in elem.text):
             isOk = True
 
@@ -189,15 +161,6 @@ class Test(unittest.TestCase):
         self.assertEqual(True, app_result[0])
 
 """
-"CFCEB0/043","90916","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/61","","True",""
-"CFCEB0/044","90965","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/62","","True",""
-"CFCEB0/045","90999","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/63","","True",""
-"CFCEB0/046","91140","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/48","","True",""
-"CFCEB0/047","91183","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/64","","True",""
-
-
-
-
 if __name__ == '__main__':
     unittest.main()
 
@@ -211,17 +174,18 @@ start_time = time.time()
 data = obtain_json(URL_json_cim)
 result = {}
 
-fieldnames = ['codi', 'idProcediment']
-fieldnames.extend(['seu_codi_title_ok', 'seu_link_app', 'seu_err_msg'])
-fieldnames.extend(['app_codi_ok', 'app_err_msg'])
+headers = ['codi', 'idProcediment']
+headers.extend(['seu_codi_title_ok', 'seu_link_app', 'seu_err_msg'])
+headers.extend(['app_codi_ok', 'app_err_msg'])
 
 keyCodi = 'Codi'
 keyIdProcediment = 'idProcediment'
 
-filtered_data = data#[43:48]
+filtered_data = data  # [43:48]
 data = filtered_data
 
-print("Elements data: " + str(len(data)))
+print("-----Init check proces...")
+print("--- Elements data: " + str(len(data)))
 
 for index, item in enumerate(data):
     dictvalue = []
@@ -241,15 +205,7 @@ for index, item in enumerate(data):
     result[codi] = dictvalue
     print("....index: "+str(index)+" codi: "+codi+" "+str(dictvalue))
 
-    """
-    if(index>=1):
-        print("---break: " + str(index) + " codi: " + codi)
-        break #only test first element
-    """
-
-print("-----generating CSV")
-headers = ['codi', 'idProcediment',
-           'seu_codi_title_ok', 'seu_link_app', 'app_title_ok']
+print("-----Generating CSV")
 with open('result.csv', 'w', newline='') as csvfile:
     # , delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL
     writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
@@ -258,55 +214,6 @@ with open('result.csv', 'w', newline='') as csvfile:
         writer.writerow(result[key])
 
 print("--- %s seconds ---" % (time.time()-start_time))
-print("--------End: " + str(len(result)))
+print("-----End: " + str(len(result)))
 
 # -- End  ----
-
-
-"""
-codi = data[0]['Codi']
-print(codi)
-print("---json--")
-result = verify_procediment(codi, idProcediment)
-print(result)
-print("---idProcediment-")
-verify_convocatoriaapp(result[1])
-
-
-filename="cimplaces.json"
-
-print("---json-")
-if os.path.exists(filename):
-    os.remove(filename)
-else:
-    print("Can not delete the file as it doesn't exists")
-download(URL_json_cim,filename)
-
-filename="ajplaces.json"
-if os.path.exists(filename):
-    os.remove(filename)
-else:
-    print("Can not delete the file as it doesn't exists")
-download(URL_json_ent,filename)
-
-data = obtain_json(URL_json_ent)
-codi = data[0]['Codi']
-print(codi)
-print("---json--")
-result = verify_procediment(codi, idProcediment)
-print(result)
-print("---idProcediment-")
-verify_convocatoriaapp(result[1])
-print("---app-")
-
-data = obtain_json(URL_json_ent)
-print(data)
-for item in data:
-    print("Codi: {}, idProcediment: {}".format(item['Codi'],item['GrupSubgrup']))
-    exit
-
-with open('result.csv', 'w', newline='') as csvfile:
-    spamwriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    spamwriter.writerow(['Spam'] * 5 + ['Baked Beans'])
-    spamwriter.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
-"""
