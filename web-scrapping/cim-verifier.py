@@ -46,8 +46,6 @@ def obtain_json(url):
     verify_procediment
     return [seu_codi_title_ok, seu_link_app, seu_err_msg]
 """
-
-
 def verify_procediment(codi, idProcediment):
     isOk = False
     result = []
@@ -62,33 +60,36 @@ def verify_procediment(codi, idProcediment):
 
     try:
         if (idProcediment == 0):
-            print("verify_procediment: " + str(idProcediment))
+            #print("verify_procediment: " + str(idProcediment))
             result = [True, '', '']
             return
 
         # Check if the scheme and netloc components are not empty
-        print("verify_procediment: " + url)
-        result = urlparse(url)
-        if result.scheme and result.netloc:
-            print("check url: " + result.scheme + " " + result.netloc)
-            driver.get(url)
-            driver.implicitly_wait(20)
-            title_css_selector = "div.titulotramitedocu#titulotramitedocu > h1"
-            elem = WebDriverWait(driver, 20).until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, title_css_selector))
-            )
-            #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
-            #print(elem.text)
+        #print("verify_procediment: " + url)
+        #result = urlparse(url)
+        #if result.scheme and result.netloc:
+        #print("check url: " + result.scheme + " " + result.netloc)
+        driver.get(url)
+        driver.implicitly_wait(20)
+        title_css_selector = "div.titulotramitedocu#titulotramitedocu > h1"
+        """elem = WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, title_css_selector))
+        )"""
+        elem = WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, title_css_selector)))
+        #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
+        #print(elem.text)
 
-            if (codi in elem.text):
-                isOk = True
+        #print("verify_procediment text: "+elem.text)
+        if (codi in elem.text):
+            isOk = True
 
-            link_procediment = "a.btn.btn-lg.btn-primary.botonrealizartramit"
-            link_elem = driver.find_elements(By.CSS_SELECTOR, link_procediment)
-            link = link_elem[0].get_attribute("href")
-        else:
-            print("Invalid URL")
+        link_procediment = "a.btn.btn-lg.btn-primary.botonrealizartramit"
+        link_elem = driver.find_elements(By.CSS_SELECTOR, link_procediment)
+        link = link_elem[0].get_attribute("href")
+        #else:
+        #    print("Invalid URL: " + url)
         result = [isOk, link, ""]
     except TimeoutException as ex:
         result = [isOk, link, str(ex)]
@@ -105,8 +106,6 @@ def verify_procediment(codi, idProcediment):
     verify_convocatoriaapp
     return [app_codi_ok, app_err_msg]
 """
-
-
 def verify_apppage(codi, url):
     isOk = False
     result = []
@@ -121,20 +120,20 @@ def verify_apppage(codi, url):
             return
 
         # Check if the scheme and netloc components are not empty
-        result = urlparse(url)
-        if result.scheme and result.netloc:
-            driver.get(url)
-            driver.implicitly_wait(20)
-            title_css_selector = "h3.d-inline-flex.justify-content-between.w-100>div"
-            elem = WebDriverWait(driver, 20).until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, title_css_selector))
-            )
+        #result = urlparse(url)
+        #if result.scheme and result.netloc:
+        driver.get(url)
+        driver.implicitly_wait(20)
+        title_css_selector = "h3.d-inline-flex.justify-content-between.w-100>div"
+        elem = WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, title_css_selector))
+        )
 
-            #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
-            #print("App " + elem.text)
-            if (codi in elem.text):
-                isOk = True
+        #elem = driver.find_element(By.CSS_SELECTOR, title_css_selector)
+        #print("App " + elem.text)
+        if (codi in elem.text):
+            isOk = True
 
         result = [isOk, ""]
     except TimeoutException as ex:
@@ -178,12 +177,33 @@ class Test(unittest.TestCase):
         self.assertEqual(True, seu_result[0])
         self.assertEqual(True, app_result[0])
 
+    def test_proces_error(self):
+        my_codi = "CFCEB0/043"
+        my_proc = 90916
+        seu_result = verify_procediment(my_codi, my_proc)
+        print("seu: "+str(seu_result))
+        app_result = verify_apppage(my_codi, seu_result[1])
+        print("app: "+str(app_result))
+
+        self.assertEqual(True, seu_result[0])
+        self.assertEqual(True, app_result[0])
 
 """
+"CFCEB0/043","90916","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/61","","True",""
+"CFCEB0/044","90965","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/62","","True",""
+"CFCEB0/045","90999","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/63","","True",""
+"CFCEB0/046","91140","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/48","","True",""
+"CFCEB0/047","91183","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/64","","True",""
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
-sys.exit("Quit script")
 
+Test().test_proces_error()
+
+sys.exit("Quit script")
 """
 
 # -- Init ----
@@ -198,7 +218,7 @@ fieldnames.extend(['app_codi_ok', 'app_err_msg'])
 keyCodi = 'Codi'
 keyIdProcediment = 'idProcediment'
 
-filtered_data = data#[78:]
+filtered_data = data#[43:48]
 data = filtered_data
 
 print("Elements data: " + str(len(data)))
