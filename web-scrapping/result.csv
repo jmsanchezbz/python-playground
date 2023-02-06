@@ -1,0 +1,218 @@
+"codi","idProcediment","seu_codi_title_ok","seu_link_app","seu_err_msg","app_codi_ok","app_err_msg"
+"CFCGA1/001","90659","False","","Message: 
+","True",""
+"CFCGC1/002","0","True","","","True",""
+"CFCGC2/003","0","True","","","True",""
+"CFCEA1/004","90797","False","","Message: 
+","True",""
+"CFCEA1/005","90922","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/29","","True",""
+"CFCEA1/006","90936","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/49","","True",""
+"CFCEA1/007","91047","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/50","","True",""
+"CFCEA1/008","90956","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/65","","True",""
+"CFCEA1/009","91373","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/66","","True",""
+"CFCEA1/010","90864","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/28","","True",""
+"CFCEA1/011","91349","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/38","","True",""
+"CFCEA1/012","91419","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/53","","True",""
+"CFCEA1/013","91320","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/37","","True",""
+"CFCEA1/014","91303","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/36","","True",""
+"CFCEA1/015","91098","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/51","","True",""
+"CFCEA1/016","91038","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/30","","True",""
+"CFCEA1/017","91153","False","","Message: timeout: Timed out receiving message from renderer: 299.618
+  (Session info: headless chrome=108.0.5359.98)
+Stacktrace:
+#0 0x56508afc62a3 <unknown>
+#1 0x56508ad84f77 <unknown>
+#2 0x56508ad6f4e9 <unknown>
+#3 0x56508ad6f225 <unknown>
+#4 0x56508ad6ddc6 <unknown>
+#5 0x56508ad6e3a8 <unknown>
+#6 0x56508ad7b72f <unknown>
+#7 0x56508ad7c382 <unknown>
+#8 0x56508ad8d390 <unknown>
+#9 0x56508ad9171b <unknown>
+#10 0x56508ad6e965 <unknown>
+#11 0x56508ad8d13f <unknown>
+#12 0x56508adf9690 <unknown>
+#13 0x56508ade1903 <unknown>
+#14 0x56508adb4ece <unknown>
+#15 0x56508adb5fde <unknown>
+#16 0x56508b01663e <unknown>
+#17 0x56508b019b79 <unknown>
+#18 0x56508affc89e <unknown>
+#19 0x56508b01aa83 <unknown>
+#20 0x56508afef505 <unknown>
+#21 0x56508b03bca8 <unknown>
+#22 0x56508b03be36 <unknown>
+#23 0x56508b057333 <unknown>
+#24 0x7f97be2dd609 start_thread
+","True",""
+"CFCEA1/018","91171","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/32","","True",""
+"CFCEA1/019","91201","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/52","","True",""
+"CFCEA1/020","91221","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/33","","True",""
+"CFCEA1/021","91236","False","","Message: 
+","True",""
+"CFCEA1/022","91257","False","","Message: 
+","True",""
+"CFCEA2/023","91898","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/54","","True",""
+"CFCEA2/024","91913","False","","Message: timeout: Timed out receiving message from renderer: 299.640
+  (Session info: headless chrome=108.0.5359.98)
+Stacktrace:
+#0 0x55ecf0f412a3 <unknown>
+#1 0x55ecf0cfff77 <unknown>
+#2 0x55ecf0cea4e9 <unknown>
+#3 0x55ecf0cea225 <unknown>
+#4 0x55ecf0ce8dc6 <unknown>
+#5 0x55ecf0ce93a8 <unknown>
+#6 0x55ecf0cf672f <unknown>
+#7 0x55ecf0cf7382 <unknown>
+#8 0x55ecf0d08390 <unknown>
+#9 0x55ecf0d0c71b <unknown>
+#10 0x55ecf0ce9965 <unknown>
+#11 0x55ecf0d0813f <unknown>
+#12 0x55ecf0d74690 <unknown>
+#13 0x55ecf0d5c903 <unknown>
+#14 0x55ecf0d2fece <unknown>
+#15 0x55ecf0d30fde <unknown>
+#16 0x55ecf0f9163e <unknown>
+#17 0x55ecf0f94b79 <unknown>
+#18 0x55ecf0f7789e <unknown>
+#19 0x55ecf0f95a83 <unknown>
+#20 0x55ecf0f6a505 <unknown>
+#21 0x55ecf0fb6ca8 <unknown>
+#22 0x55ecf0fb6e36 <unknown>
+#23 0x55ecf0fd2333 <unknown>
+#24 0x7f1352a01609 start_thread
+","True",""
+"CFCEA2/025","92014","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/55","","True",""
+"CFCEA2/026","91946","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/41","","True",""
+"CFCEA2/027","91969","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/42","","True",""
+"CFCEA2/028","92233","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/40","","True",""
+"CFCEA2/029","92113","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/60","","True",""
+"CFCEA2/030","92046","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/43","","True",""
+"CFCEA2/031","92134","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/58","","True",""
+"CFCEA2/032","92028","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/57","","True",""
+"CFCEA2/033","91996","False","","Message: 
+","True",""
+"CFCEA2/034","92093","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/44","","True",""
+"CFCEA2/035","92065","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/45","","True",""
+"CFCEA2/036","92175","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/59","","True",""
+"CFCEA2/037","92086","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/46","","True",""
+"CFCEA2/038","92215","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/47","","True",""
+"CFCEAP/039","0","True","","","True",""
+"CFCEAP/040","0","True","","","True",""
+"CFCEAP/041","0","True","","","True",""
+"CFCEAP/042","0","True","","","True",""
+"CFCEB0/043","90916","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/61","","True",""
+"CFCEB0/044","90965","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/62","","True",""
+"CFCEB0/045","90999","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/63","","True",""
+"CFCEB0/046","91140","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/48","","True",""
+"CFCEB0/047","91183","False","https://tramitssirh.conselldemallorca.net/tramits/tramit/64","","True",""
+"CFCEC1/048","0","True","","","True",""
+"CFCEC1/049","0","True","","","True",""
+"CFCEC1/050","0","True","","","True",""
+"CFCEC1/051","0","True","","","True",""
+"CFCEC1/052","0","True","","","True",""
+"CFCEC2/053","0","True","","","True",""
+"CFCEC2/054","0","True","","","True",""
+"CFCEC2/055","0","True","","","True",""
+"CFCEC2/056","0","True","","","True",""
+"CFCEC2/057","0","True","","","True",""
+"CFCEC2/058","0","True","","","True",""
+"CFCEC2/059","0","True","","","True",""
+"CFCEC2/060","0","True","","","True",""
+"CFCEC2/061","0","True","","","True",""
+"CFCEC2/062","0","True","","","True",""
+"CFCEC2/063","0","True","","","True",""
+"CFCEC2/064","0","True","","","True",""
+"CFCEC2/065","0","True","","","True",""
+"CFCEC2/066","0","True","","","True",""
+"CFOGA1/067","91480","False","","Message: 
+","True",""
+"CFOGC1/068","0","True","","","True",""
+"CFOGC2/069","0","True","","","True",""
+"CFOEA1/070","91505","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/8","","True",""
+"CFOEA1/071","91542","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/19","","True",""
+"CFOEA1/072","91595","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/9","","True",""
+"CFOEA1/073","91692","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/13","","True",""
+"CFOEA1/074","91777","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/14","","True",""
+"CFOEA1/075","91809","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/11","","True",""
+"CFOEA1/076","91731","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/10","","True",""
+"CFOEA1/077","91851","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/12","","True",""
+"CFOEA2/078","91275","False","","Message: 
+Stacktrace:
+#0 0x55a1f16f22a3 <unknown>
+#1 0x55a1f14b0f77 <unknown>
+#2 0x55a1f14ed80c <unknown>
+#3 0x55a1f14eda71 <unknown>
+#4 0x55a1f1527734 <unknown>
+#5 0x55a1f150db5d <unknown>
+#6 0x55a1f152547c <unknown>
+#7 0x55a1f150d903 <unknown>
+#8 0x55a1f14e0ece <unknown>
+#9 0x55a1f14e1fde <unknown>
+#10 0x55a1f174263e <unknown>
+#11 0x55a1f1745b79 <unknown>
+#12 0x55a1f172889e <unknown>
+#13 0x55a1f1746a83 <unknown>
+#14 0x55a1f171b505 <unknown>
+#15 0x55a1f1767ca8 <unknown>
+#16 0x55a1f1767e36 <unknown>
+#17 0x55a1f1783333 <unknown>
+#18 0x7f760c138609 start_thread
+","True",""
+"CFOEA2/079","91345","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/20","","True",""
+"CFOEA2/080","91408","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/16","","True",""
+"CFOEA2/081","91452","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/22","","True",""
+"CFOEA2/082","91437","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/17","","True",""
+"CFOEA2/083","91484","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/24","","True",""
+"CFOEA2/084","91386","False","","Message: 
+","True",""
+"CFOEA2/085","91466","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/23","","True",""
+"CFOEA2/086","91958","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/18","","True",""
+"CFOEAP/087","0","True","","","True",""
+"CFOEB0/088","90884","True","https://tramitssirh.conselldemallorca.net/tramits/tramit/25","","True",""
+"CFOEC1/089","0","True","","","True",""
+"CFOEC2/090","0","True","","","True",""
+"CFOEC2/091","0","True","","","True",""
+"CLC0AP/092","0","True","","","True",""
+"CLC0AP/093","0","True","","","True",""
+"CLC0AP/094","0","True","","","True",""
+"CLC0AP/095","0","True","","","True",""
+"CLC0AP/096","0","True","","","True",""
+"CLC0AP/097","0","True","","","True",""
+"CLC0AP/098","0","True","","","True",""
+"CLC0AP/099","0","True","","","True",""
+"CLC0C1/100","0","True","","","True",""
+"CLC0C1/101","0","True","","","True",""
+"CLC0C2/102","0","True","","","True",""
+"CLC0C1/103","0","True","","","True",""
+"CLC0C2/104","0","True","","","True",""
+"CLC0C2/105","0","True","","","True",""
+"CLC0C2/106","0","True","","","True",""
+"CLC0C2/107","0","True","","","True",""
+"CLC0C2/108","0","True","","","True",""
+"CLC0C2/109","0","True","","","True",""
+"CLC0C2/110","0","True","","","True",""
+"CLC0C2/111","0","True","","","True",""
+"CLC0C2/112","0","True","","","True",""
+"CLC0C2/113","0","True","","","True",""
+"CLC0C2/114","0","True","","","True",""
+"CLC0C2/115","0","True","","","True",""
+"CLC0C2/116","0","True","","","True",""
+"CLC0C2/117","0","True","","","True",""
+"CLC0C2/118","0","True","","","True",""
+"CLC0C2/119","0","True","","","True",""
+"CLC0C2/120","0","True","","","True",""
+"CLC0C2/121","0","True","","","True",""
+"CLC0C2/122","0","True","","","True",""
+"CLC0C2/123","0","True","","","True",""
+"CLC0C2/124","0","True","","","True",""
+"CLC0C2/125","0","True","","","True",""
+"CLC0C2/126","0","True","","","True",""
+"CLC0C2/127","0","True","","","True",""
+"CLC0C2/128","0","True","","","True",""
+"CLC0C2/129","0","True","","","True",""
+"CLC0C2/130","0","True","","","True",""
+"CLC0C2/131","0","True","","","True",""
+"CLO0C1/132","0","True","","","True",""
+"CLO0C2/133","0","True","","","True",""
