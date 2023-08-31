@@ -46,17 +46,17 @@ def extract_theme(filename):
 #"(\d{1,2}).(.*)"
 def extract_question(line):
     """Extract question (number,question)  (.*)? """ 
-    regex = r"^(.*?)(\d{1,2})\.\s(.*)$" #^[.\D]*(\d{1,2})\.\s([A-Z].*)$" 
+    regex = r"^(.*?)(\d{1,2})\.\s*(.*)$" #^[.\D]*(\d{1,2})\.\s([A-Z].*)$" 
     result = re.search(regex, line)
 
     if result is None:
         return ['','']
-    print(result[1])
+    #print(result[1])
     return [int(result[2]),result[3].strip()]
 
 def extract_option(line):
     """Extract answer (option,answer)"""
-    regex = r"(^[a-d]+)\)\s(.*)$"
+    regex = r"(^[a-d]+)\)\s*(.*)$"
     result = re.search(regex, line)
 
     if result is None:
@@ -91,7 +91,7 @@ def is_question_answer(line):
  #"\d{1,2}\.(\s)*"
 def is_question(line):
     """Tell if line is a question"""
-    regex = r"^(.*?)(\d{1,2})\.\s(.*)$"
+    regex = r"^(.*?)(\d{1,2})\.\s*([a-zA-ZÀÈÉÍÒÓÚ]+.+)$"
     result = re.search(regex, line)
     if result is None:
         return False
@@ -100,7 +100,7 @@ def is_question(line):
 
 def is_answer(line):
     """Tell if line is an answer"""
-    regex = r"[a-d]{1}\)\s"
+    regex = r"(^[a-d]+)\)\s*(.*)$"
     result = re.search(regex, line)
     if result is None:
         return False
@@ -116,19 +116,19 @@ def create_question(administration, group, theme, number, question, option1, opt
     return q
 
 def generate_insert(question):
-    query = "insert into question (administration, grup, theme, number, question, option1, option2, option3, option4, answer, explanation) "
+    query = "insert into question (administration, grup, theme, number, question, option1, option2, option3, option4) " #, answer, explanation
     query += "values ("
     query += "\"" + question[ADM] + "\", "
     query += "\"" + question[G] + "\", "
     query += str(question[T]) + ", "
     query += str(question[N]) + ", "
-    query += "\"" + question[Q] + "\", "
-    query += "\"" + question[O1] + "\", "
-    query += "\"" + question[O2] + "\", "
-    query += "\"" + question[O3] + "\", "
-    query += "\"" + question[O4] + "\", "
-    query += str(question[A]) + ", "
-    query += "\"" + question[E] + "\""
+    query += "\"" + question[Q].replace('"','@') + "\", "
+    query += "\"" + question[O1].replace('"','@') + "\", "
+    query += "\"" + question[O2].replace('"','@') + "\", "
+    query += "\"" + question[O3].replace('"','@') + "\", "
+    query += "\"" + question[O4].replace('"','@') + "\""
+    #query += str(question[A]) + ", "
+    #query += "\"" + question[E] + "\""
     query += "); "
 
     return query
@@ -148,15 +148,20 @@ def write_sql_questions_file(filename, questions):
     print("write_file: " + filename + " created!")
 
 def create_inserts_file():
-    path = '/home/jose/Downloads/_preguntes/caib/caib_a1/'
+    path = '/home/jose/Downloads/_preguntes/caib/caib_a1/'#admlocal/local_a2/'
     questions_json = ""
     questions = ""
     myquestions = []
     print('>>>> path: '+path)
     for file in os.listdir(path):
+        filepath = path + file# + "/"
         print('------------------------'+file)
+        
+        if (os.path.isdir(filepath)):
+            continue
+
         theme = extract_theme(file)
-        with codecs.open(path + "/" + file, encoding='utf-8') as f:
+        with codecs.open(filepath, encoding='utf-8') as f:
             qa = 0
 
             administration="caib"
@@ -177,10 +182,9 @@ def create_inserts_file():
                 #if (i!=0 and line != 1): break
                 if (len(line)==0):
                     # skip empty line
-                    qa = 0
-                    
-                    myquestions.append(create_question(administration,group,theme,number,question,option1,option2,option3,option4,answer,explanation))
-                elif (is_question(line)):
+                    continue
+                
+                if (is_question(line)):
                     question_tupla = extract_question(line)
 
                     number = question_tupla[0]
@@ -201,18 +205,31 @@ def create_inserts_file():
                     #if (qa==4):print("+++ " + str(qa_complete))
 
                     if (option_tupla[0]==O1):
-                        option1 = option_tupla[1]
+                        option1 = option_tupla[1].replace('"','\"')
                     elif (option_tupla[0]==O2):
-                        option2 = option_tupla[1]
+                        option2 = option_tupla[1].replace('"','\"')
                     elif (option_tupla[0]==O3):
-                        option3 = option_tupla[1]
+                        option3 = option_tupla[1].replace('"','\"')
                     elif (option_tupla[0]==O4):
-                        option4 = option_tupla[1]
+                        option4 = option_tupla[1].replace('"','\"')
                 else:
-                    print("########### ERROR: theme: " + str(theme) + ", question:" + str(number) + ", line: " + str(i) + " : " + str(line))
+                    print("########### ERROR: No question nor answer? theme: " + str(theme) + ", question:" + str(number) + ", line: " + str(i) + " : " + str(line))
                     break
+
+                if (len(question)>0 and len(option1)>0 and len(option2)>0 and len(option3)>0 and len(option4)>0):
+                    # save complete question and reset values
+                    qa = 0
+                    myquestions.append(create_question(administration,group,theme,number,question,option1,option2,option3,option4,answer,explanation))
+
+                    number=0
+                    question=""
+                    option1=""
+                    option2=""
+                    option3=""
+                    option4=""
+                
                 #print('---> '+ create_question("caib","a1", theme, question, question[0] ))
-        break #only first theme
+        #break #only first theme
     write_sql_questions_file("insert.sql",myquestions)
 
     #print("--------------------------------------------------------" + str(len(myquestions)))
@@ -374,6 +391,11 @@ class Test(unittest.TestCase):
         expected = ""
         result = extract_option(testcase)
         self.assertEqual(result[0], expected)
+
+    def test_generate_import(self):
+        expected = "{'adm': 'caib', 'g': 'A1', 't': 15, 'n': 1, 'q': 'Segons l’article', 'o4': '', 'a': '', 'e': ''}"
+        filename = "test.txt"
+        self.assertEqual(1,1)
 
     def test_write_file(self):
         expected = "{'adm': 'caib', 'g': 'A1', 't': 15, 'n': 1, 'q': 'Segons l’article', 'o4': '', 'a': '', 'e': ''}"
