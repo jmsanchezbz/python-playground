@@ -148,7 +148,9 @@ def write_sql_questions_file(filename, questions):
     print("write_file: " + filename + " created!")
 
 def create_inserts_file():
-    path = '/home/jose/Downloads/_preguntes/caib/caib_a1/'#admlocal/local_a2/'
+    administration="caib"
+    group="A1"
+    path = '/home/jose/Downloads/_preguntes/caib/caib_a1/'#admlocal/local_a2/'caib/caib_a1/
     questions_json = ""
     questions = ""
     myquestions = []
@@ -164,8 +166,6 @@ def create_inserts_file():
         with codecs.open(filepath, encoding='utf-8') as f:
             qa = 0
 
-            administration="caib"
-            group="A1"
             number=0
             question=""
             option1=""
