@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
 
+# CONFIGURACION
+#  Este script genera un fichero con los inserts de las preguntas
+#  generado de los archivos de texto en la carpeta path
+#  que deben ser de la misma administración y grupo definido
+#
+# def create_inserts_file():
+#    path = '/path/where/files/are/' # Path where the files are
+#    administration="caib"   #Convocatoria caib,local...
+#    group="A1"  #A1, A2, B1, B2...
+#
+
 import unittest
 
 import codecs
@@ -19,11 +30,16 @@ O4="o4"
 A="a"
 E="e"
 
-structure=["lang","group","theme","number","question","option1","option2","option3","option4","answer"]
+QA_REGEX = r"^[\s]*(\d{1,2}[\.\)].*)\n([\s]*([a]+)\)\s*(.*))\n[\s]*([b]+)\)\s*(.*)\n[\s]*([c]+)\)\s*(.*)\n[\s]*([d]+)\)\s*(.*)\n*"
+THEME_REGEX = r"Tema_(\d{1,2})_"
+QUESTION_REGEX = r"^(\s*?)(\d{1,2})[\.\)]\s*([a-zA-ZÀÈÉÍÒÓÚ¿]+.+)$"
+ANSWER_REGEX = r"^[\s]*([a-d]+)\)\s*(.*)$"
+
+#structure=["lang","group","theme","number","question","option1","option2","option3","option4","answer"]
 
 def extract_qa(lines):
     """Get question and answers"""
-    regex = r"^(.*?)(\d{1,2}\..*)\n([a]+\).*)\n([b]+\).*)\n([c]+\).*\n)([d]+\).*)\n*"
+    regex = QA_REGEX #r"^(.*?)(\d{1,2}\..*)\n([a]+\).*)\n([b]+\).*)\n([c]+\).*\n)([d]+\).*)\n*"
     result = re.search(regex, lines)
 
     if result is None:
@@ -33,7 +49,7 @@ def extract_qa(lines):
 
 def extract_theme(filename):
     """Extract tema (number)"""
-    regex = r"Tema_(\d{1,2})_"
+    regex = THEME_REGEX #r"Tema_(\d{1,2})_"
     result = re.search(regex, filename)
     if result is None:
         regex = r"-T(\d{1,2})-"
@@ -43,10 +59,9 @@ def extract_theme(filename):
 
     return int(result[1])
 
-#"(\d{1,2}).(.*)"
 def extract_question(line):
     """Extract question (number,question)  (.*)? """ 
-    regex = r"^(.*?)(\d{1,2})\.\s*(.*)$" #^[.\D]*(\d{1,2})\.\s([A-Z].*)$" 
+    regex = QUESTION_REGEX
     result = re.search(regex, line)
 
     if result is None:
@@ -56,7 +71,7 @@ def extract_question(line):
 
 def extract_option(line):
     """Extract answer (option,answer)"""
-    regex = r"(^[a-d]+)\)\s*(.*)$"
+    regex = ANSWER_REGEX
     result = re.search(regex, line)
 
     if result is None:
@@ -76,7 +91,7 @@ def extract_option(line):
 
 def is_question_answer(line):
     """Tell if line is a question"""
-    regex = r"^(.*?)(\d{1,2}\..*)\n([a]+\).*)\n([b]+\).*)\n([c]+\).*\n)([d]+\).*)\n*"
+    regex = QA_REGEX
     result = re.search(regex, line)
 
     print(line)
@@ -88,10 +103,9 @@ def is_question_answer(line):
 
     return True
 
- #"\d{1,2}\.(\s)*"
 def is_question(line):
     """Tell if line is a question"""
-    regex = r"^(.*?)(\d{1,2})\.\s*([a-zA-ZÀÈÉÍÒÓÚ]+.+)$"
+    regex = QUESTION_REGEX
     result = re.search(regex, line)
     if result is None:
         return False
@@ -100,7 +114,7 @@ def is_question(line):
 
 def is_answer(line):
     """Tell if line is an answer"""
-    regex = r"(^[a-d]+)\)\s*(.*)$"
+    regex = ANSWER_REGEX
     result = re.search(regex, line)
     if result is None:
         return False
@@ -127,8 +141,6 @@ def generate_insert(question):
     query += "\"" + question[O2].replace('"','@') + "\", "
     query += "\"" + question[O3].replace('"','@') + "\", "
     query += "\"" + question[O4].replace('"','@') + "\""
-    #query += str(question[A]) + ", "
-    #query += "\"" + question[E] + "\""
     query += "); "
 
     return query
@@ -148,11 +160,13 @@ def write_sql_questions_file(filename, questions):
     print("write_file: " + filename + " created!")
 
 def create_inserts_file():
-    administration="caib"
-    group="A1"
-    path = '/home/jose/Downloads/_preguntes/caib/caib_a1/'#admlocal/local_a2/'caib/caib_a1/
+    administration="caib"   #Convocatoria caib,local...
+    group="A1"  #A1, A2, B1, B2...
+    path = '/path/where/files/are/' # Path where the files are
+
     questions_json = ""
     questions = ""
+    resultsql="test.sql"
     myquestions = []
     print('>>>> path: '+path)
     for file in os.listdir(path):
@@ -178,9 +192,9 @@ def create_inserts_file():
             qa_complete = {}
             for i, ln in enumerate(f):
                 line = ln.strip()
-                #print(str(len(line)) + '-' + line)
                 #if (i!=0 and line != 1): break
-                if (len(line)==0):
+                if (len(line)==0 or (not is_question(line) and not is_answer(line))):
+                    if not(len(line)==0): print(str(theme) + " skipped: " + line)
                     # skip empty line
                     continue
                 
@@ -194,16 +208,15 @@ def create_inserts_file():
                     qa_complete[N] = number
                     qa_complete[Q] = question
                     qa_complete[T] = theme
-                    #print("---"+question[0] + " " +question[1])
+                    
                 elif (is_answer(line)):
                     option_tupla = extract_option(line)
-                    if (len(option_tupla[0])==0 or len(option_tupla[1])==0):print("---"+option_tupla[0] + " " + option_tupla[1])
+                    if (len(option_tupla[0])==0 or len(option_tupla[1])==0):print(str(theme)+"---"+str(question)+"---"+option_tupla[0] + " " + option_tupla[1])
                     qa_complete[option_tupla[0]] = option_tupla[1]
                     if (option_tupla[0] == O4):
                         if (len(questions)>0): questions += ','
                         questions_json += json.dumps(qa_complete, indent=2)
-                    #if (qa==4):print("+++ " + str(qa_complete))
-
+                    
                     if (option_tupla[0]==O1):
                         option1 = option_tupla[1].replace('"','\"')
                     elif (option_tupla[0]==O2):
@@ -214,7 +227,7 @@ def create_inserts_file():
                         option4 = option_tupla[1].replace('"','\"')
                 else:
                     print("########### ERROR: No question nor answer? theme: " + str(theme) + ", question:" + str(number) + ", line: " + str(i) + " : " + str(line))
-                    break
+                    continue
 
                 if (len(question)>0 and len(option1)>0 and len(option2)>0 and len(option3)>0 and len(option4)>0):
                     # save complete question and reset values
@@ -228,28 +241,11 @@ def create_inserts_file():
                     option3=""
                     option4=""
                 
-                #print('---> '+ create_question("caib","a1", theme, question, question[0] ))
-        #break #only first theme
-    write_sql_questions_file("insert.sql",myquestions)
+    write_sql_questions_file(resultsql,myquestions)
 
-    #print("--------------------------------------------------------" + str(len(myquestions)))
-    #print(myquestions[0])
-    #print(myquestions[0]['adm'])
-    #print(generate_insert(myquestions[0]))
-    #print(str(myquestions))
 
 create_inserts_file()
 
-'''
-    print(questions)
-    json_object = json.loads("[" + questions + "]")
-    json_formatted_str = json.dumps(json_object)
-    print(json_formatted_str)
-    
-    with open("questions.json", "w") as outfile:
-        json.dump(json_formatted_str, outfile)
-'''
-    #break
 
 #-------some basic tests-------------------------------------------------------
 class Test(unittest.TestCase):
